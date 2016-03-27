@@ -1,0 +1,125 @@
+
+#loginform
+{
+   width:400px;
+   height:600px;
+   right:225px;
+   margin-top: -350px;
+   background-color:#585858;
+   border-radius:3px;
+   box-shadow:0px 0px 10px 0px #424242;
+   padding:10px;
+   box-sizing:border-box;
+   font-family:helvetica;
+   visibility:hidden;
+   display:none;
+   position: absolute;
+}
+#loginform #close_login
+{
+   position:absolute;
+   top:00px;
+   right:00px;
+   width:25px;
+   height:25px;
+}
+#loginform p
+{
+   margin-top:40px;
+   font-size:22px;
+   color:#E6E6E6;
+}
+#loginform #new_id
+{
+   width:250px;
+   height:40px;
+   border:2px solid silver;
+   border-radius:3px;
+   padding:5px;
+}
+#loginform #newpass
+{
+   margin-top:5px;
+   width:250px;
+   height:40px;
+   border:2px solid silver;
+   border-radius:3px;
+   padding:5px;
+}
+#Fname, #Lname, #phoneNumber, #email, #year, #degree, #faculty {
+   margin-top:5px;
+   width:250px;
+   height:40px;
+   border:2px solid silver;
+   border-radius:3px;
+   padding:5px;
+}
+#createAccount
+{
+   margin-left:-5px;
+   margin-top:10px;
+   width:250px;
+   height:40px;
+   border:none;
+   border-radius:3px;
+   color:#E6E6E6;
+   background-color:grey;
+   font-size:20px;
+}
+
+
+
+@import "bourbon";
+
+body { 
+        background: url('images/display.jpg') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+
+.wrapper {  
+   margin-top: 200px;
+  margin-bottom: 200px;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
+
+  .form-signin-heading,
+{
+     margin-bottom: 30px;
+     color: black;
+   }
+
+
+   .form-control {
+     position: relative;
+     font-size: 16px;
+     height: auto;
+     padding: 10px;
+      @include box-sizing(border-box);
+
+      &:focus {
+        z-index: 2;
+      }
+   }
+
+   input[type="text"] {
+     margin-bottom: -1px;
+     border-bottom-left-radius: 0;
+     border-bottom-right-radius: 0;
+   }
+
+   input[type="password"] {
+     margin-bottom: 20px;
+     border-top-left-radius: 0;
+     border-top-right-radius: 0;
+   }
+}
+
