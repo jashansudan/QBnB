@@ -103,7 +103,7 @@ if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
                     <a href="#">Overview</a>
                 </li>
                 <li>
-                    <a href="#">Events</a>
+                    <a href="properties.php">My Properties</a>
                 </li>
                 <li>
                     <a href="#">About</a>
