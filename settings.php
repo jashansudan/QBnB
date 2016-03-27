@@ -77,8 +77,9 @@ if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
     else{
         echo "failed";
     }
-    echo "Account Successfully Deleted";
-    die();
+    session_destroy();
+    header("Location: index.php");
+    
 
 }
 ?>
@@ -122,9 +123,13 @@ if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12" action ="index.php" method = "post">
+                    <div class="col-lg-12">
                         <h1>Change your Account!</h1>
-                        <input type='submit' name='deleteAcc' id='deleteAcc' value='Delete Account'/> 
+                        <form action ="<?php $_PHP_SELF ?>" method = "post">
+                            <tr>
+                                <td><input type='submit' name='deleteAcc' id='deleteAcc' value='Delete Account'/> </td>
+                            </tr>
+                        </form>
                     </div>
                 </div>
             </div>
