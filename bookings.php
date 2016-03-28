@@ -3,7 +3,7 @@
 <head>
 
 
-	<title> My Properties</title>
+	<title> My Bookings</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="properties.css">
 	<link href="css/simple-sidebar.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 	include_once 'config/connection.php'; 
 
 			    // SELECT query
-	$query = "SELECT member_id, address, district, type FROM rental_properties WHERE member_id=?";
+	$query = "SELECT member_id, booking_id, status, booking_start FROM bookings WHERE member_id=?";
 
 
 			        // prepare query for execution
@@ -45,46 +45,9 @@
 	?>
 
 
-	<?php
-
-
-//add a property
-	if(isset($_POST['createProperty'])){
-
-    // include database connection
-		include_once 'config/connection.php'; 
-
-		$member_id = $myrow['member_id'];
-		$address = $_POST['address'];
-		$district = $_POST['district'];
-		$type = $_POST['type'];
-		$rate = $_POST['rate'];
-
-
-        // Insert
-		$sql = "INSERT INTO rental_properties (member_id, address, district, type, rate)
-		VALUES('$member_id', '$address', '$district', '$type', '$rate')";
-
-
-        // prepare query for execution
-		$retval = $con->query($sql);
-
-		if (!$retval){
-			echo "could not create property";
-		}
-		else {
-			echo "Property Created!";
-			
-		}
-
-	}
-
-	?>
-
-
 
 	<?php
-	//delete property
+	//delete booking
 	   	if(isset($_POST['delete'])){
 
     // include database connection
@@ -94,7 +57,7 @@
 
 
         // Insert
-		$sql = "DELETE FROM rental_properties WHERE address = '$propertyToDelete'";
+		$sql = "DELETE FROM bookings WHERE booking_id = $propertyToDelete";
 		echo $propertyToDelete;
 
 
@@ -148,30 +111,13 @@
 		<ul style="list-style-type:none">
 			<?php
 			foreach ($result as $row) { ?> 
-			<li > <image src ="images/house.jpg"/> <p> ADDRESS:  <?= $row["address"] ?> &emsp; DISTRICT: <?= $row["district"] ?> &emsp; TYPE: <?= $row["type"] ?>  </p> </li>
+			<li > <image src ="images/house.jpg"/> <p>  STATUS: <?= $row["status"] ?> &emsp; Start DATE: <?= $row["booking_start"] ?>  </p> </li>
 			<?php } ?>
 		</ul>
 	</div>
 	<div class="wrapper">
-		<button class="btn btn-md btn-primary btn-block" type="button" id='add_property'> Add New Property</button> 
-		<button class="btn btn-md btn-primary btn-block" type="button" id='delete_property'> Delete a Property</button> 
+		<button class="btn btn-md btn-primary btn-block" type="button" id='delete_property'> Delete a Booking</button> 
 	</div> 
-	<div>
-		<center>
-			<div id = "propertyform">
-				<form method = "post" action = "<?php $_PHP_SELF ?>">
-					<p>Add a New QBnB Booking</p>
-
-					<input type = "image" id = "close_property" src = "images/close.png">
-					<input type = "text" id = "address" placeholder = "Address" name = "address" required>
-					<input type = "text" id = "district" placeholder = "District" name = "district" required>
-					<input type = "text" id = "type" placeholder = "Property Type" name = "type" required>
-					<input type = "text" size="9" id = "rate" placeholder = "Rent" name = "rate" required>
-					<input type = "submit" id = "createProperty" value = "Create Property" name = "createProperty" <a href="#"></a>>
-				</form>
-			</div>
-		</center>
-	</div>
 
 
 	<div>
@@ -183,10 +129,11 @@
 					<?php
 					foreach ($result as $row) { ?> 
 					 <li>
-					 <textarea rows="0" cols="0" name="zambia" maxlength"0" id="zambia"> <?= $row["address"] ?></textarea>
+					 <textarea name="zambia" maxlength"0" id="zambia" > <?= $row["booking_id"] ?></textarea>
 					 <input type="submit" id="delete" name="delete" class="btn btn-md btn-primary btn-block smallMargin" value="Delete"> </button> </li>
 					<?php }
 
+					$propertyToDelete = $row["booking_id"];
 					 ?>
 				</ul>
 				</form>
