@@ -95,7 +95,7 @@ if(isset($_SESSION['member_id'])){
                     </a>
                 </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="dashboard.php">Dashboard</a>
                 </li>
                 <li>
                     <a href="search.php">All Listings</a>

@@ -18,6 +18,37 @@
 	session_start();
 	?>
 
+
+  <?php
+if(isset($_SESSION['member_id'])){
+   // include database connection
+    include_once 'config/connection.php'; 
+    
+    // SELECT query
+        $query = "SELECT member_id, password, email, Fname FROM Member WHERE member_id=?";
+ 
+        // prepare query for execution
+        $stmt = $con->prepare($query);
+        
+        // bind the parameters. This is the best way to prevent SQL injection hacks.
+        $stmt->bind_Param("s", $_SESSION['member_id']);
+
+        // Execute the query
+        $stmt->execute();
+ 
+        // results 
+        $result = $stmt->get_result();
+        
+        // Row data
+        $row = $result->fetch_assoc();
+        
+} else {
+    //User is not logged in. Redirect the browser to the login index.php page and kill this page.
+    header("Location: index.php");
+    die();
+}
+?>
+
 	<?php
 
 	include_once 'config/connection.php'; 
@@ -79,33 +110,33 @@
 
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
-			<li class="sidebar-brand">
-				<a href="#">
-					Welcome  <?php echo $myrow['member_id']; ?>
-				</a>
-			</li>
-			<li>
-				<a href="dashboard.php">Dashboard</a>
-			</li>
-			<li>
-				<a href="#">Shortcuts</a>
-			</li>
-			<li>
-				<a href="#">Overview</a>
-			</li>
-			<li>
-				<a href="properties.php">My Properties</a>
-			</li>
-			<li>
-				<a href="bookings.php">My Bookings</a>
-			</li>
-			<li>
-				<a href="#">Services</a>
-			</li>
-			<li>
-				<a href="settings.php">Account Setting</a>
-			</li>
-		</ul>
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Welcome  <?php echo $row['Fname']; ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="dashboard.php">Dashboard</a>
+                </li>
+                <li>
+                    <a href="search.php">All Listings</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="properties.php">My Properties</a>
+                </li>
+                <li>
+                    <a href="bookings.php">My Bookings</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="settings.php">Account Setting</a>
+                </li>
+            </ul>
 	</div>
 	<div class="property-list">
 		<ul style="list-style-type:none">
