@@ -15,6 +15,33 @@
    display:none;
    position: absolute;
 }
+
+#deletepropertyform
+{
+   width:400px;
+   height:400px;
+   right:225px;
+   margin-top: -500px;
+   background-color:#585858;
+   border-radius:3px;
+   box-shadow:0px 0px 10px 0px #424242;
+   padding:10px;
+   box-sizing:border-box;
+   font-family:helvetica;
+   visibility:hidden;
+   display:none;
+   position: absolute;
+}
+
+#deletepropertyform #close_property_del
+{
+   position:absolute;
+   top:00px;
+   right:00px;
+   width:25px;
+   height:25px;
+}
+
 #propertyform #close_property
 {
    position:absolute;
@@ -49,6 +76,11 @@
    color:#E6E6E6;
    background-color:grey;
    font-size:20px;
+}
+
+#smallMargin
+{
+  padding:50px;
 }
 
 
