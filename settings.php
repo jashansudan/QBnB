@@ -98,7 +98,7 @@ if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
                     <a href="dashboard.php">Dashboard</a>
                 </li>
                 <li>
-                    <a href="#">Shortcuts</a>
+                    <a href="search.php">All Listings</a>
                 </li>
                 <li>
                     <a href="#">Overview</a>
