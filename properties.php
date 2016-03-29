@@ -181,8 +181,10 @@ if(isset($_SESSION['member_id'])){
 		</ul>
 	</div>
 	<div class="wrapper">
+
 		<button class="btn btn-md btn-primary btn-block" type="button" id='add_property'> Add New Property</button> 
 		<button class="btn btn-md btn-primary btn-block" type="button" id='delete_property'> Delete a Property</button> 
+
 	</div> 
 	<div>
 		<center>

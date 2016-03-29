@@ -59,7 +59,7 @@ if(isset($_SESSION['member_id'])){
 
 
         $member_id = $_SESSION['member_id'];
-        $sql = "SELECT * FROM Rental_Properties WHERE member_id <> $member_id";
+        $sql = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id";
         $stmt = $con->prepare($sql);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -110,12 +110,15 @@ if(isset($_SESSION['member_id'])){
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
+        
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Search Listings</h1>
                         <h3> Sort By</h3>
+                        <div>
+                        <form action ="<?php $_PHP_SELF ?>" method = "post">
 
                         <div class="dropdown">
 
@@ -123,9 +126,9 @@ if(isset($_SESSION['member_id'])){
                             <span class="caret"></span></button>
                             <ul class="dropdown-menu">
 
-                              <li onclick="$('#district').val('disLow'); $('#searchForm').submit()"><a href="#">Lowest - Highest </a></li>
+                              <li> <input type='submit' class='form-control btn btn-link' name = 'disLow' value='Lowest - Highest'> </li>
 
-                              <li><a href="#">Highest - Lowest</a></li>
+                              <li> <input type='submit' class= 'form-control btn btn-link' name = 'disHigh' value = 'Highest - Lowest'> </li>
 
                             </ul>
 
@@ -134,53 +137,195 @@ if(isset($_SESSION['member_id'])){
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Features
                             <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                              <li><a href="#">Least - Most</a></li>
-                              <li><a href="#">Most - Least</a></li>
+
+                              <li><input type='submit' class='form-control btn btn-link' name = 'featLow' value='Least - Most'></li>
+                              <li><input type='submit' class='form-control btn btn-link' name = 'featHigh' value='Most - Least'></li>
+
                             </ul>
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Price
                             <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                              <li><a href="#">Lowest - Highest</a></li>
-                              <li><a href="#">Highest - Lowest</a></li>
+
+                              <li><input type='submit' class='form-control btn btn-link' name = 'priceLow' value='Lowest - Highest'></li>
+                              <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Lowest - Highest'></li>
+
                             </ul>
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Type
                             <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                              <li><a href="#">Condo</a></li>
-                              <li><a href="#">House</a></li>
-                              <li><a href="#">Apartment</a></li>
-                              <li><a href="#">Room</a></li>
+
+                              <li><input type='submit' class='form-control btn btn-link' name = 'condo' value='Condo'></li>
+                              <li><input type='submit' class='form-control btn btn-link' name = 'house' value='House'></li>
+                              <li><input type='submit' class='form-control btn btn-link' name = 'apartment' value='Apartment'></li>
+                              <li><input type='submit' class='form-control btn btn-link' name = 'room' value='Room'></li>
+
                             </ul>
                         </div>
-                        <br>
-                        <br>
-                        <br>
 
+                        <br>
+                        <br>
+                        <br>
+                        </form>
+                        </div>
                         <?php
                             if(isset($_POST['disLow']) && isset($_SESSION['member_id'])){
                                 include_once 'config/connection.php'; 
-                                echo "we good";
-                                $newQuery = "SELECT * FROM Rental_Properties 
-                                WHERE member_id <> $member_id
-                                ORDER BY 'district'";
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
+                                ORDER BY district";
                                 $stmt = $con->prepare($newQuery);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
-                                $row = $result->fetch_assoc();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
                                     echo "<br> <br> <br>";
                                 }
                             }
+                            elseif(isset($_POST['disHigh']) && isset($_SESSION['member_id'])){
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
+                                ORDER BY district DESC";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }
+                            }
+                            elseif(isset($_POST['featLow']) && isset($_SESSION['member_id'])){
+
+                                 include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
+                                ORDER BY COUNT(features)";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }   
+
+                                }
+
+                            elseif(isset($_POST['featHigh']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
+                                ORDER BY COUNT(features) DESC";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }   
+
+                                 }
+
+                            elseif(isset($_POST['priceLow']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
+                                ORDER BY rate";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }
+
+                                 }
+
+                            elseif(isset($_POST['priceHigh']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
+                                ORDER BY rate DESC";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }
+
+                                 }
+
+                            elseif(isset($_POST['condo']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%condo%' GROUP BY property_id";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }
+
+                                 }
+
+                            elseif(isset($_POST['house']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%house%' GROUP BY property_id";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }
+
+                                 }
+
+                            elseif(isset($_POST['apartment']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%apartment%' GROUP BY property_id";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }
+
+                                 }
+                            
+                            elseif(isset($_POST['room']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php'; 
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%room%' GROUP BY property_id";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
+                                    echo "<br> <br> <br>";
+                                }
+
+                                }
+
                             else {
                             while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . "<br>";
+                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] .  "<br>";
                                 echo "<br> <br> <br>";
 
                             }
