@@ -32,13 +32,33 @@
   //Create a user session or resume an existing one
  session_start();
  ?>
+ <?php
+ 
+ if(isset($_POST['updateBtn']) && isset($_SESSION['member_id'])){
+  // include database connection
+    include_once 'config/connection.php'; 
+    
+    $query = "UPDATE Member SET password=?,email=?,fname=?,Lname=?,phoneNumber=?,year=?,faculty=?,degree=? WHERE member_id=?";
+ 
+    $stmt = $con->prepare($query);  
+    $stmt->bind_param('sssssssss', $_POST['password'], $_POST['email'], $_POST['Fname'],$_POST['Lname'],$_POST['phoneNumber'],$_POST['year'],$_POST['faculty'], $_POST['degree'], $_SESSION['member_id']);
+    // Execute the query
+        if($stmt->execute()){
+            echo "Record was updated. <br/>";
+        }else{
+            echo 'Unable to update record. Please try again. <br/>';
+        }
+ }
+ 
+ ?>
+ 
   <?php
 if(isset($_SESSION['member_id'])){
    // include database connection
     include_once 'config/connection.php'; 
     
     // SELECT query
-        $query = "SELECT member_id, password, email, Fname FROM Member WHERE member_id=?";
+        $query = "SELECT * FROM Member WHERE member_id=?";
  
         // prepare query for execution
         $stmt = $con->prepare($query);
@@ -120,11 +140,70 @@ if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
+        <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Change your Account!</h1>
+                        <h1>Change your Account Settings!</h1>
+                        <form name='editProfile' id='editProfile' action='settings.php' method='post'>
+                            <table border='0'>
+                                <tr>
+                                    <td> Member ID</td>
+                                    <td><input type='text' name='member_id' id='member_id' disabled  value="<?php echo $myrow['member_id']; ?>"  /></td>
+                                </tr>
+                                <tr>
+                                    <td>Password</td>
+                                     <td><input type='text' name='password' id='password'  value="<?php echo $myrow['password']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td><input type='text' name='Fname' id='Fname'  value="<?php echo $myrow['Fname']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name</td>
+                                    <td><input type='text' name='Lname' id='Lname'  value="<?php echo $myrow['Lname']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><input type='text' name='email' id='email'  value="<?php echo $myrow['email']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone Number</td>
+                                    <td><input type='text' name='phoneNumber' id='phoneNumber'  value="<?php echo $myrow['phoneNumber']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Graduation Year</td>
+                                    <td><input type='text' name='year' id='year'  value="<?php echo $myrow['year']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Faculty</td>
+                                    <td><input type='text' name='faculty' id='faculty'  value="<?php echo $myrow['faculty']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Degree</td>
+                                    <td><input type='text' name='degree' id='degree'  value="<?php echo $myrow['degree']; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input type='submit' name='updateBtn' id='updateBtn' value='Update' /> 
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                        <a href="index.php?logout=1">Log Out</a><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
                         <form action ="<?php $_PHP_SELF ?>" method = "post">
                             <tr>
                                 <td><input type='submit' name='deleteAcc' id='deleteAcc' value='Delete Account'/> </td>

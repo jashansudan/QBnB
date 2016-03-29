@@ -33,33 +33,14 @@
  session_start();
  ?>
 
-<?php
- 
- if(isset($_POST['updateBtn']) && isset($_SESSION['member_id'])){
-  // include database connection
-    include_once 'config/connection.php'; 
-	
-	$query = "UPDATE Member SET password=?,email=? WHERE member_id=?";
- 
-	$stmt = $con->prepare($query);	
-    $stmt->bind_param('sss', $_POST['password'], $_POST['email'], $_SESSION['member_id']);
-	// Execute the query
-        if($stmt->execute()){
-            echo "Record was updated. <br/>";
-        }else{
-            echo 'Unable to update record. Please try again. <br/>';
-        }
- }
- 
- ?>
- 
+
   <?php
 if(isset($_SESSION['member_id'])){
    // include database connection
     include_once 'config/connection.php'; 
     
     // SELECT query
-        $query = "SELECT member_id, password, email, Fname FROM Member WHERE member_id=?";
+        $query = "SELECT * FROM Member WHERE member_id=?";
  
         // prepare query for execution
         $stmt = $con->prepare($query);
@@ -124,29 +105,11 @@ if(isset($_SESSION['member_id'])){
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Hi</h1>
-                        <form name='editProfile' id='editProfile' action='dashboard.php' method='post'>
-                            <table border='0'>
-                                <tr>
-                                    <td> Member ID</td>
-                                    <td><input type='text' name='member_id' id='member_id' disabled  value="<?php echo $myrow['member_id']; ?>"  /></td>
-                                </tr>
-                                <tr>
-                                    <td>Password</td>
-                                     <td><input type='text' name='password' id='password'  value="<?php echo $myrow['password']; ?>" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td><input type='text' name='email' id='email'  value="<?php echo $myrow['email']; ?>" /></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <input type='submit' name='updateBtn' id='updateBtn' value='Update' /> 
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
+                        <h1>Welcome to QBnB</h1>
+                        <br> <br> <br>
+                        <H3>  WE <strong> DON'T </strong> KNOW WHY YOU ARE <strong> HERE </strong> <h3>
+                        <H6> Why are you using QBnB instead of AirBnB?</H6>
+                        <H6> Anyways, take a look around, this site is pretty 🔥 !!! </H6>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     	<a href="index.php?logout=1">Log Out</a><br/>
                     </div>

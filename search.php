@@ -149,7 +149,7 @@ if(isset($_SESSION['member_id'])){
                             <ul class="dropdown-menu">
 
                               <li><input type='submit' class='form-control btn btn-link' name = 'priceLow' value='Lowest - Highest'></li>
-                              <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Lowest - Highest'></li>
+                              <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Highest - Lowest'></li>
 
                             </ul>
                         </div>
