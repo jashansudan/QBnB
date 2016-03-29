@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" type="text/css" href="search.css">
+    <link rel="stylesheet" type="text/css" href="admin.css">
 
     <title>QBnB Admin page 🔥</title>
 
@@ -110,78 +110,39 @@ if(isset($_SESSION['member_id'])){
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Welcome to QBnB</h1>
-                        <br> <br> <br>
-                        <H3>  WE <strong> DON'T </strong> KNOW WHY YOU ARE <strong> HERE </strong> <h3>
-                        <H6> Why are you using QBnB instead of AirBnB?</H6>
-                        <H6> Anyways, take a look around, this site is pretty 🔥 !!! </H6>
-
-                        <h4> Do dat admin thhang </h4>
-
-
-                        delete a member and all their accomodations
-                        delete an accomdation
-                        smmarize bookings and ratings per accomdaion
-                        sumamrize bookings and ratings per supplier
-                        summarize booking activity per consumer
+                       
 
 
                         <h3> Actions </h3>
-                        <div>
-                        <form action ="<?php $_PHP_SELF ?>" method = "post">
+                        
 
-                        <div class="dropdown">
+                        <form method = "post" action = "<?php $_PHP_SELF ?>">
+                            <input type = 'submit' name ='dltAcc' class ='btn btn-danger temp' value = 'Delete an account'>
+                            <button type = 'submit' name ='dltAcom' class ='btn btn-danger temp'> Delete an Accomodation </button>
+                            <button type = 'submit' name ='sumAcc' class ='btn btn-danger temp'> Summarize bookings by accodmation </button>
+                            <button type = 'submit' name ='sumSupp' class ='btn btn-danger temp'> Summarize bookings per Supplier</button>
+                            <button type = 'submit' name ='sumCons' class ='btn btn-danger temp'> Summarize activity per Consumer </button>
 
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" name='district'>Delete 
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-
-                              <li> <input type='submit' class='form-control btn btn-link' name = 'disLow' value='Lowest - Highest'> </li>
-
-                              <li> <input type='submit' class= 'form-control btn btn-link' name = 'disHigh' value = 'Highest - Lowest'> </li>
-
-                            </ul>
-
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Features
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-
-                              <li><input type='submit' class='form-control btn btn-link' name = 'featLow' value='Least - Most'></li>
-                              <li><input type='submit' class='form-control btn btn-link' name = 'featHigh' value='Most - Least'></li>
-
-                            </ul>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Price
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-
-                              <li><input type='submit' class='form-control btn btn-link' name = 'priceLow' value='Lowest - Highest'></li>
-                              <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Highest - Lowest'></li>
-
-                            </ul>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Type
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-
-                              <li><input type='submit' class='form-control btn btn-link' name = 'condo' value='Condo'></li>
-                              <li><input type='submit' class='form-control btn btn-link' name = 'house' value='House'></li>
-                              <li><input type='submit' class='form-control btn btn-link' name = 'apartment' value='Apartment'></li>
-                              <li><input type='submit' class='form-control btn btn-link' name = 'room' value='Room'></li>
-
-                            </ul>
-                        </div>
-
-                        <br>
-                        <br>
-                        <br>
                         </form>
+                        <div>
+
+                            <?php
+                            if(isset($_POST['dltAcc']) && isset($_SESSION['member_id'])){
+                                include_once 'config/connection.php'; 
+                                $member_id = $_SESSION['member_id'];
+                                $newQuery = "SELECT * FROM Member WHERE member_id<>$member_id";
+                                $stmt = $con->prepare($newQuery);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    echo "Member ID: " . $row['member_id'] . ", Name: " . $row['Fname'] . " " . $row['Lname'] . "<br>";
+                                }
+                            }
+                            ?>
+
                         </div>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
-                    	<a href="index.php?logout=1">Log Out</a><br/>
+                    	
                     </div>
                 </div>
             </div>
