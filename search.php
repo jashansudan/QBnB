@@ -24,6 +24,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link href="search.css" rel="stylesheet">
+    <script type="text/javascript" src="getpropertyid.js"></script>
 
 </head>
 
@@ -148,8 +149,8 @@ if(isset($_SESSION['member_id'])){
                             <span class="caret"></span></button>
                             <ul class="dropdown-menu">
 
-                              <li><input type='submit' class='form-control btn btn-link' name = 'priceLow' value='Lowest - Highest'></li>
                               <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Highest - Lowest'></li>
+                              <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Lowest - Highest'></li>
 
                             </ul>
                         </div>
@@ -180,9 +181,14 @@ if(isset($_SESSION['member_id'])){
                                 $stmt->execute();
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
-                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "<a href='comments.php'> <img src ='images/house.png' height='200' width='300'>  </a>" . "<br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                    <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
                             }
                             elseif(isset($_POST['disHigh']) && isset($_SESSION['member_id'])){
@@ -194,8 +200,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                    <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
                             }
                             elseif(isset($_POST['featLow']) && isset($_SESSION['member_id'])){
@@ -208,8 +219,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                    <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }   
 
                                 }
@@ -224,8 +240,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                    <form  action="comments.php" method = 'get'> 
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }   
 
                                  }
@@ -240,8 +261,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                    <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
 
                                  }
@@ -256,8 +282,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                                                        <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
 
                                  }
@@ -271,8 +302,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                                                        <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
 
                                  }
@@ -286,8 +322,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                    e                                    <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
 
                                  }
@@ -301,8 +342,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                                                        <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
 
                                  }
@@ -316,8 +362,13 @@ if(isset($_SESSION['member_id'])){
                                 $result = $stmt->get_result();
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>";
-                                    echo "<br> <br> <br>";
+                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                                                        <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
                                 }
 
                                 }
@@ -325,8 +376,13 @@ if(isset($_SESSION['member_id'])){
                             else {
                             while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] .  "<br>";
-                                echo "<br> <br> <br>";
+                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] .  "<br>"; ?>
+                                                                    <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    </form>
+                                    <br> <br> <br>
+                                    <?php
 
                             }
                         }
@@ -355,6 +411,27 @@ if(isset($_SESSION['member_id'])){
         $("#wrapper").toggleClass("toggled");
     });
     </script>
+
+    <?php
+
+
+//add a property
+    if(isset($_POST['viewcomment'])){
+
+    // include database connection
+        include_once 'config/connection.php'; 
+        $property_id = $_POST['propid'];
+        echo $property_id;
+
+
+        // Insert
+         $_SESSION['property_id'] = $property_id;
+
+
+    }
+
+    ?>
+
 
 </body>
 

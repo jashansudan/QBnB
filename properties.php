@@ -17,41 +17,13 @@
   //Create a user session or resume an existing one
 	session_start();
 	?>
-  <?php
-if(isset($_SESSION['member_id'])){
-   // include database connection
-    include_once 'config/connection.php'; 
-    
-    // SELECT query
-        $query = "SELECT member_id, password, email, Fname FROM Member WHERE member_id=?";
- 
-        // prepare query for execution
-        $stmt = $con->prepare($query);
-        
-        // bind the parameters. This is the best way to prevent SQL injection hacks.
-        $stmt->bind_Param("s", $_SESSION['member_id']);
 
-        // Execute the query
-        $stmt->execute();
- 
-        // results 
-        $result = $stmt->get_result();
-        
-        // Row data
-        $row = $result->fetch_assoc();
-        
-} else {
-    //User is not logged in. Redirect the browser to the login index.php page and kill this page.
-    header("Location: index.php");
-    die();
-}
-?>
 	<?php
 
 	include_once 'config/connection.php'; 
 
 			    // SELECT query
-	$query = "SELECT member_id, address, district, type FROM rental_properties WHERE member_id=?";
+	$query = "SELECT member_id, Fname, address, district, type FROM rental_properties NATURAL JOIN member WHERE member_id=?";
 
 
 			        // prepare query for execution
@@ -144,33 +116,27 @@ if(isset($_SESSION['member_id'])){
 
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Welcome  <?php echo $row['Fname']; ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="dashboard.php">Dashboard</a>
-                </li>
-                <li>
-                    <a href="search.php">All Listings</a>
-                </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="properties.php">My Properties</a>
-                </li>
-                <li>
-                    <a href="bookings.php">My Bookings</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="settings.php">Account Setting</a>
-                </li>
-            </ul>
+			<li class="sidebar-brand">
+				<a href="#">
+					Welcome  <?php echo $myrow['Fname']; ?>
+				</a>
+			</li>
+						<li>
+				<a href="dashboard.php">Dashboard</a>
+			</li>
+			<li>
+				<a href="search.php">All Listings</a>
+			</li>
+			<li>
+				<a href="properties.php">My Properties</a>
+			</li>
+			<li>
+				<a href="bookings.php">My Bookings</a>
+			</li>
+			<li>
+				<a href="settings.php">Account Setting</a>
+			</li>
+		</ul>
 	</div>
 	<div class="property-list">
 		<ul style="list-style-type:none">
@@ -181,10 +147,8 @@ if(isset($_SESSION['member_id'])){
 		</ul>
 	</div>
 	<div class="wrapper">
-
 		<button class="btn btn-md btn-primary btn-block" type="button" id='add_property'> Add New Property</button> 
 		<button class="btn btn-md btn-primary btn-block" type="button" id='delete_property'> Delete a Property</button> 
-
 	</div> 
 	<div>
 		<center>
