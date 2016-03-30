@@ -2,3 +2,8 @@
 	display: inline-block;
 	margin: 5px;
 }
+
+
+
+
+SELECT *, AVG(rating) as rate FROM Comments Natural JOIN Member

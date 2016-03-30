@@ -118,12 +118,13 @@ if(isset($_SESSION['member_id'])){
 
                         <form method = "post" action = "<?php $_PHP_SELF ?>">
                             <input type = 'submit' name ='dltAcc' class ='btn btn-danger temp' value = 'Delete an account'>
-                            <button type = 'submit' name ='dltAcom' class ='btn btn-danger temp'> Delete an Accomodation </button>
-                            <button type = 'submit' name ='sumAcc' class ='btn btn-danger temp'> Summarize bookings by accodmation </button>
-                            <button type = 'submit' name ='sumSupp' class ='btn btn-danger temp'> Summarize bookings per Supplier</button>
-                            <button type = 'submit' name ='sumCons' class ='btn btn-danger temp'> Summarize activity per Consumer </button>
+                            <input type = 'submit' name ='dltAcom' class ='btn btn-danger temp' value='Delete an Accomodation'>
+                            <input type = 'submit' name ='sumAcc' class ='btn btn-danger temp' value ='Summarize bookings by accodmation'>
+                            <input type = 'submit' name ='sumSupp' class ='btn btn-danger temp' value='Summarize bookings per Supplier'>
+                            <input type = 'submit' name ='sumCons' class ='btn btn-danger temp' value='Summarize activity per Consumer'>
 
                         </form>
+                        <br>
                         <div>
 
                             <?php
@@ -134,10 +135,99 @@ if(isset($_SESSION['member_id'])){
                                 $stmt = $con->prepare($newQuery);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
+                                echo "<form method = 'post' action ='http://localhost/admin.php?dltAcc=Delete+an+account' >";
                                 while($row = $result->fetch_assoc()){
+                                    $del_id = $row['member_id'];
+                                    echo " <input type = 'submit' name ='$del_id' class ='btn btn-primary temp' value='Delete Account'>";
+
                                     echo "Member ID: " . $row['member_id'] . ", Name: " . $row['Fname'] . " " . $row['Lname'] . "<br>";
                                 }
+                                echo "</form> ";
+
                             }
+
+
+                            /*
+                            if(isset($_POST['$del_id'] && isset($_SESSION['member_id'])){
+                                include_once 'config/connection.php'; 
+                                $sql = "DELETE FROM Member WHERE member_id = $member_id";
+                                $retval = $con->query($sql);
+                                if($retval){
+                                    echo "success";
+                                }
+                                else{
+                                    echo "failed";
+                                    }
+                            
+                            } */
+                            ?>
+
+                            <?php
+                                if(isset($_POST['sumAcc']) && isset($_SESSION['member_id'])){
+                                    include_once 'config/connection.php';
+
+                                    $query = "SELECT Rental_Properties.address, round(AVG(Comments.rating),1) as rate, Comments.comment_text as comment
+                                    From Rental_Properties JOIN Comments ON Rental_Properties.property_id = Comments.property_id
+                                         GROUP BY Rental_Properties.property_id";
+                                        
+                                    $stmt = $con->prepare($query);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                    while($row = $result->fetch_assoc()){
+                                        echo"Address: " . $row['address'] . ", Average Rating: " . $row['rate'];
+                                        if ($row['comment'] != null){
+                                            echo ", Comment: ". $row['comment'];
+                                        }
+                                        echo "<br>";
+
+                                    }
+
+                                }
+
+                            ?>
+
+                            <?php
+                                if(isset($_POST['sumSupp']) && isset($_SESSION['member_id'])){
+                                    include_once 'config/connection.php';
+
+                                    $query = "SELECT Rental_Properties.member_id, round(AVG(Comments.rating),1) as rate, Comments.comment_text as comment
+                                    From Rental_Properties JOIN Comments ON Rental_Properties.property_id = Comments.property_id
+                                         GROUP BY Rental_Properties.member_id";
+                                        
+                                    $stmt = $con->prepare($query);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                    while($row = $result->fetch_assoc()){
+                                        echo"Supplier: " . $row['member_id'] . ", Average Rating: " . $row['rate'];
+                                        if ($row['comment'] != null){
+                                            echo ", Comment: ". $row['comment'];
+                                        }
+                                        echo "<br>";
+                                    }
+
+                                }
+
+                            ?>
+
+
+                            <?php
+                                if(isset($_POST['sumCons']) && isset($_SESSION['member_id'])){
+                                    include_once 'config/connection.php';
+                                    $query = "SELECT Member.Fname, Member.Lname, Round(AVG(rating),1) as rate, Comments.comment_text FROM Member NATURAL JOIN Comments GROUP BY member_id";
+                                        
+                                    $stmt = $con->prepare($query);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                    while($row = $result->fetch_assoc()){
+                                        echo"Consumer: " . $row['Fname'] . " " . $row['Lname'] . ", Average Rating: " . $row['rate'];
+                                        if ($row['comment_text'] != null){
+                                            echo ", Comment: ". $row['comment_text'];
+                                        }
+                                        echo "<br>";
+                                    }
+
+                                }
+
                             ?>
 
                         </div>
