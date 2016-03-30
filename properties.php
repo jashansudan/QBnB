@@ -154,7 +154,7 @@
 		<center>
 			<div id = "propertyform">
 				<form method = "post" action = "<?php $_PHP_SELF ?>">
-					<p>Add a New QBnB Booking</p>
+					<p>Add a New QBnB Property</p>
 
 					<input type = "image" id = "close_property" src = "images/close.png">
 					<input type = "text" id = "address" placeholder = "Address" name = "address" required>

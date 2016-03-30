@@ -1,12 +1,11 @@
 $(document).ready(function(){
-
    $("#show_login").click(function(){
     showpopup();
    });
    $("#add_property").click(function(){
     showpropertypopup();
    });
-   $("#add_reply").click(function(){
+   $("#book_property").click(function(){
     showpropertypopup();
    });
     $("#delete_property").click(function(){
@@ -73,4 +72,8 @@ function message()
 function goBack()
 {
   window.location.href = "dashboard.php";
+}
+
+function showBooking(){
+  showpropertypopup();
 }
