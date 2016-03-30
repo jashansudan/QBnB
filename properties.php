@@ -23,7 +23,7 @@
 	include_once 'config/connection.php'; 
 
 			    // SELECT query
-	$query = "SELECT member_id, Fname, address, district, type FROM rental_properties NATURAL JOIN member WHERE member_id=?";
+	$query = "SELECT member_id, property_id, Fname, address, district, type FROM rental_properties NATURAL JOIN member WHERE member_id=?";
 
 
 			        // prepare query for execution
@@ -90,11 +90,11 @@
     // include database connection
 		include_once 'config/connection.php'; 
 
-		$propertyToDelete = $_POST['zambia'];
+		$propertyToDelete = $_POST['zimbabwe'];
 
 
         // Insert
-		$sql = "DELETE FROM rental_properties WHERE address = '$propertyToDelete'";
+		$sql = "DELETE FROM rental_properties WHERE property_id = '$propertyToDelete'";
 		echo $propertyToDelete;
 
 
@@ -137,7 +137,7 @@
 				<a href="settings.php">Account Setting</a>
 			</li>
 			<li>
-                <a href="index.php?logout=1">Log Out</a>
+               <a href="index.php?logout=1">Log Out</a>
             </li>
 		</ul>
 	</div>
@@ -180,6 +180,7 @@
 					<?php
 					foreach ($result as $row) { ?> 
 					 <li>
+					 <input type="hidden" id="zimbabwe" name="zimbabwe" value="<?= $row["property_id"] ?>" ></input>
 					 <textarea rows="0" cols="0" name="zambia" maxlength"0" id="zambia"> <?= $row["address"] ?></textarea>
 					 <input type="submit" id="delete" name="delete" class="btn btn-md btn-primary btn-block smallMargin" value="Delete"> </button> </li>
 					<?php }
