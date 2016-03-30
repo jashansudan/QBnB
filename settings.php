@@ -129,6 +129,9 @@ if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
                 <li>
                     <a href="settings.php">Account Setting</a>
                 </li>
+                <li>
+                    <a href="index.php?logout=1">Log Out</a>
+                </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -187,7 +190,6 @@ if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
                             </table>
                         </form>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
-                        <a href="index.php?logout=1">Log Out</a><br/>
                     </div>
                 </div>
             </div>

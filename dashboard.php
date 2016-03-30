@@ -90,6 +90,9 @@ if(isset($_SESSION['member_id'])){
                 <li>
                     <a href="settings.php">Account Setting</a>
                 </li>
+                <li>
+                <a href="index.php?logout=1">Log Out</a>
+            </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -105,7 +108,6 @@ if(isset($_SESSION['member_id'])){
                         <H6> Why are you using QBnB instead of AirBnB?</H6>
                         <H6> Anyways, take a look around, this site is pretty 🔥 !!! </H6>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
-                    	<a href="index.php?logout=1">Log Out</a><br/>
                     </div>
                 </div>
             </div>

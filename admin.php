@@ -80,26 +80,23 @@ if(isset($_SESSION['member_id'])){
                     </a>
                 </li>
                 <li>
-                    <a href="dashboard.php">Dashboard</a>
-                </li>
-                <li>
-                    <a href="search.php">All Listings</a>
-                </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="properties.php">My Properties</a>
-                </li>
-                <li>
-                    <a href="bookings.php">My Bookings</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="settings.php">Account Setting</a>
-                </li>
+                <a href="dashboard.php">Dashboard</a>
+            </li>
+            <li>
+                <a href="search.php">All Listings</a>
+            </li>
+            <li>
+                <a href="properties.php">My Properties</a>
+            </li>
+            <li>
+                <a href="bookings.php">My Bookings</a>
+            </li>
+            <li>
+                <a href="settings.php">Account Setting</a>
+            </li>
+            <li>
+                <a href="index.php?logout=1">Log Out</a>
+            </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->

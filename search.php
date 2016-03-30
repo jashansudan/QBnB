@@ -129,6 +129,9 @@
                     <li>
                         <a href="settings.php">Account Setting</a>
                     </li>
+                    <li>
+                        <a href="index.php?logout=1">Log Out</a>
+                    </li>
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
