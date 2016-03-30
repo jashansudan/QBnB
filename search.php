@@ -356,7 +356,7 @@ if(isset($_SESSION['member_id'])){
                             elseif(isset($_POST['room']) && isset($_SESSION['member_id'])){
 
                                 include_once 'config/connection.php'; 
-                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE 'room%' GROUP BY property_id";
+                                $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%room%' GROUP BY property_id";
                                 $stmt = $con->prepare($newQuery);
                                 $stmt->execute();
                                 $result = $stmt->get_result();

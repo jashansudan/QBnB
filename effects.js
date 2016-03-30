@@ -6,6 +6,9 @@ $(document).ready(function(){
    $("#add_property").click(function(){
     showpropertypopup();
    });
+   $("#add_reply").click(function(){
+    showpropertypopup();
+   });
     $("#delete_property").click(function(){
       showdeletepropertypopup();
    });

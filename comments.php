@@ -20,41 +20,91 @@
 
 	<?php
 
-	if(isset($_SESSION['property_id'])){
+	if(isset($_SESSION['member_id'])){
 
-	include_once 'config/connection.php';
-	$property_id = $_GET["propid"];
+		include_once 'config/connection.php';
+		$property_id = $_GET["propid"];
 
 			    // SELECT query
-	$query = "SELECT member_id, FName, property_id, comment_text, rating FROM comments NATURAL JOIN member WHERE property_id=$property_id";
+		$query = "SELECT member_id, Fname, reply, property_id, comment_id, comment_text, rating FROM comments NATURAL JOIN member WHERE property_id=$property_id";
 
 
 			        // prepare query for execution
-	$stmt = $con->prepare($query);
+		$stmt = $con->prepare($query);
 
 
 			        // bind the parameters. This is the best way to prevent SQL injection hacks.
 	//$stmt->bind_Param("s", $_SESSION['member_id']);
 
 			        // Execute the query
-	$stmt->execute();
-
+		$stmt->execute();
 
 			                // results 
-	$result = $stmt->get_result();
+		$result = $stmt->get_result();
+
 
 			        // Row data
-	$myrow = $result->fetch_assoc();
-}
+		$myrow = $result->fetch_assoc();
+
+
+	} else {
+    //User is not logged in. Redirect the browser to the login index.php page and kill this page.
+		header("Location: index.php");
+		die();
+	}
 	?>
 
+	<?php
+//add a property
+	if(isset($_POST['add_reply'])){
+
+    // include database connection
+		include_once 'config/connection.php'; 
+
+		$reply = $_POST['reply_text'];
+		$comment_id = $_POST['comment_id'];
+        // Insert
+        $sql = "UPDATE comments SET reply='$reply' WHERE comment_id=$comment_id";
+
+
+        // prepare query for execution
+		$retval = $con->query($sql);
+
+
+	}
+
+	?>
+
+		<?php
+//add a property
+	if(isset($_POST['add_comment'])){
+
+    // include database connection
+		include_once 'config/connection.php'; 
+
+		$comment = $_POST['theComment'];
+		$rating = $_POST['rating'];
+		$proper_id = $_POST['properid'];
+		$membid = $_POST['membid'];
+        // Insert
+        $sql = "INSERT INTO comments (member_id, property_id, rating, comment_text, reply)
+		VALUES('$membid', '$proper_id', '$rating', '$comment', null)";
+
+
+        // prepare query for execution
+		$retval = $con->query($sql);
+
+
+	}
+
+	?>
 
 
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
 			<li class="sidebar-brand">
 				<a href="#">
-					Welcome  <?php echo $myrow['FName']; ?>
+					
 				</a>
 			</li>
 			<li>
@@ -78,12 +128,42 @@
 		<ul style="list-style-type:none">
 			<h1>COMMENTS</h1>
 			<?php
+
 			foreach ($result as $row) { ?> 
-			<li  ><p> USER: <?= $row["FName"]?> <br> RATING: <?= $row["rating"] ?> <br> COMMENT: <?= $row["comment_text"]?> &emsp;   </p> </li>
+			<li  ><p> USER: <?= $row["Fname"]?> <br> RATING: <?= $row["rating"] ?> <br> COMMENT: <?= $row["comment_text"]?> <br></p>
+			<?php
+				if($row["reply"] == null){
+					?> &emsp;
+						<form method="post"> 
+						<input type="hidden" value="<?= $row['comment_id'] ?>" id="comment_id" name="comment_id"></input>
+						<input type="text" value="Add Reply" id="reply_text" name="reply_text"></input>
+					 <input type="submit" id="add_reply" name="add_reply" value="Reply"></input><br><br><br>
+
+					 </form>
+
+					 <?php
+				}
+				else{
+				?>	&emsp; Owner Reply: <?= $row["reply"] ?> <br><br><br>
+				<?php
+				}	?>
+
+			</li>
 			<?php } ?>
 		</ul>
 	</div>
+	<div class="property-list">
+	<h2>Add a Comment</h2><br>
+		<form method="post"> 
+		<input type="hidden" value="<?= $row['property_id'] ?>" id="properid" name="properid"></input>
+		<input type="hidden" value="<?= $row['member_id'] ?>" id="membid" name="membid"></input>
+					 <input type="text" value="Comment" id="theComment" name="theComment"></input><br>
+					 <input type="text" value="Rating (1-5)" id="rating" name="rating"></input><br>
+					 <input type="submit" id="add_comment" name="add_comment" value="Submit"></input><br><br>
 
-	</body>
+					 </form>
 
-	</html>
+
+</body>
+
+</html>
