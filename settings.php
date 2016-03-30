@@ -86,6 +86,8 @@ if(isset($_SESSION['member_id'])){
 if(isset($_POST['deleteAcc']) && isset($_SESSION['member_id'])){
     include_once 'config/connection.php'; 
     $member_id = $_SESSION['member_id'];
+    $sql2 = "DELETE * FROM Rental_Properties WHERE member_id=$member_id";
+    $retval2 = $con->query($sql2);
     $sql = "DELETE FROM Member WHERE member_id = $member_id";
     $retval = $con->query($sql);
 

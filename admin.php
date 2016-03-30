@@ -135,32 +135,79 @@ if(isset($_SESSION['member_id'])){
                                 $stmt = $con->prepare($newQuery);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
-                                echo "<form method = 'post' action ='http://localhost/admin.php?dltAcc=Delete+an+account' >";
+                                
                                 while($row = $result->fetch_assoc()){
-                                    $del_id = $row['member_id'];
-                                    echo " <input type = 'submit' name ='$del_id' class ='btn btn-primary temp' value='Delete Account'>";
+                                    $del_id = $row['member_id']; ?>
+                                    <form action="<?php $_PHP_SELF ?>" method= 'post'>
+                                        <input type = 'hidden' name='accDet' id ='accDet' value='<?= $row["member_id"]?>'>
+                                        <input class = 'btn btn-primary temp' type='submit' width='600px' id='$row["member_id"]' value = 'Delete Account' name = 'del_id'>
+                                    </form>
 
+                                    
+                                    <?php 
+                                
                                     echo "Member ID: " . $row['member_id'] . ", Name: " . $row['Fname'] . " " . $row['Lname'] . "<br>";
+
+
                                 }
-                                echo "</form> ";
+                        
 
                             }
 
-
-                            /*
-                            if(isset($_POST['$del_id'] && isset($_SESSION['member_id'])){
-                                include_once 'config/connection.php'; 
-                                $sql = "DELETE FROM Member WHERE member_id = $member_id";
-                                $retval = $con->query($sql);
-                                if($retval){
-                                    echo "success";
-                                }
-                                else{
-                                    echo "failed";
-                                    }
-                            
-                            } */
                             ?>
+                            
+                            
+                            <?php
+                            
+                            if(isset($_POST['del_id']) && isset($_SESSION['member_id'])){
+                                include_once 'config/connection.php'; 
+
+                                $memb_id = $_POST['accDet'];
+                                $sql1= "DELETE * FROM Rental_Properties WHERE member_id =$memb_id";
+
+                                $retval1=$con->query($sql1);
+                                $sql2 = "DELETE FROM Member WHERE member_id = $memb_id";
+                                $retval2 = $con->query($sql2);
+                                
+                            } 
+                            
+                            ?>
+
+                            <?php
+                            if(isset($_POST['dltAcom']) && isset($_SESSION['member_id'])){
+
+                                include_once 'config/connection.php';
+                                $query = "SELECT * FROM Rental_Properties";
+                                $stmt = $con->prepare($query);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                while($row = $result->fetch_assoc()){
+                                    $del_acom = $row['property_id']; ?>
+                                    <form action="<?php $_PHP_SELF ?>" method= 'post'>
+                                        <input type = 'hidden' name='propDet' id ='propDet' value='<?= $row["property_id"]?>'>
+                                        <input class = 'btn btn-primary temp' type='submit' width='600px' id='$row["property_id"]' value = 'Delete Accomodation' name = 'delAcom'>
+                                    </form>
+                                    <?php
+                                    echo "Property Address: " . $row['address'] . ", District: " . $row['district'];
+
+                                }
+
+                            }
+                            ?>
+
+                            <?php
+                            if(isset($_POST['delAcom']) && isset($_SESSION['member_id'])){
+                                $prop_id = $_POST['propDet'];
+                                $sql = "DELETE FROM Rental_Properties WHERE property_id = $prop_id";
+                                $retval=$con->query($sql);
+
+                            }
+
+                            ?>
+
+                            
+
+
 
                             <?php
                                 if(isset($_POST['sumAcc']) && isset($_SESSION['member_id'])){
@@ -190,15 +237,15 @@ if(isset($_SESSION['member_id'])){
                                 if(isset($_POST['sumSupp']) && isset($_SESSION['member_id'])){
                                     include_once 'config/connection.php';
 
-                                    $query = "SELECT Rental_Properties.member_id, round(AVG(Comments.rating),1) as rate, Comments.comment_text as comment
-                                    From Rental_Properties JOIN Comments ON Rental_Properties.property_id = Comments.property_id
+                                    $query = "SELECT Member.Fname, Member.Lname, round(AVG(Comments.rating),1) as rate, Comments.comment_text as comment
+                                    From (Rental_Properties Natural JOIN Member) JOIN Comments ON Rental_Properties.property_id = Comments.property_id
                                          GROUP BY Rental_Properties.member_id";
                                         
                                     $stmt = $con->prepare($query);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
                                     while($row = $result->fetch_assoc()){
-                                        echo"Supplier: " . $row['member_id'] . ", Average Rating: " . $row['rate'];
+                                        echo"Supplier: " . $row['Fname'] . " ", $row['Lname'] . ", Average Rating: " . $row['rate'];
                                         if ($row['comment'] != null){
                                             echo ", Comment: ". $row['comment'];
                                         }
@@ -213,16 +260,15 @@ if(isset($_SESSION['member_id'])){
                             <?php
                                 if(isset($_POST['sumCons']) && isset($_SESSION['member_id'])){
                                     include_once 'config/connection.php';
-                                    $query = "SELECT Member.Fname, Member.Lname, Round(AVG(rating),1) as rate, Comments.comment_text FROM Member NATURAL JOIN Comments GROUP BY member_id";
+                                    $query = "SELECT Member.Fname, Member.Lname, GROUP_CONCAT(Rental_Properties.address) as addresses, GROUP_CONCAT(booking_start) as bookings_start, GROUP_CONCAT(status) as statuses 
+                                        FROM (Bookings NATURAL JOIN Member) JOIN Rental_Properties ON Rental_Properties.property_id = Bookings.property_id
+                                        GROUP BY Member.member_id";
                                         
                                     $stmt = $con->prepare($query);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
                                     while($row = $result->fetch_assoc()){
-                                        echo"Consumer: " . $row['Fname'] . " " . $row['Lname'] . ", Average Rating: " . $row['rate'];
-                                        if ($row['comment_text'] != null){
-                                            echo ", Comment: ". $row['comment_text'];
-                                        }
+                                        echo"Consumer: " . $row['Fname'] . " " . $row['Lname'] . ", Rental Properties: " . $row['addresses'] . ", Booking Starts: " . $row['bookings_start'] . ", Status: " . $row['statuses'];
                                         echo "<br>";
                                     }
 

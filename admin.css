@@ -6,4 +6,4 @@
 
 
 
-SELECT *, AVG(rating) as rate FROM Comments Natural JOIN Member
+
