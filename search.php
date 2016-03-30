@@ -17,7 +17,7 @@
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="properties.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -78,39 +78,31 @@
         ?> 
 
 
-            <?php
+        <?php
 
 
 //add a property
-    if(isset($_POST['createbooking'])){
+        if(isset($_POST['createbooking'])){
 
     // include database connection
-        include_once 'config/connection.php'; 
+            include_once 'config/connection.php'; 
 
-        $member_id = $myrow['member_id'];
-        $pid = $_POST['pid'];
-        $startDate = $_POST['date'];
+            $member_id = $myrow['member_id'];
+            $pid = $row['property_id'];
+            $startDate = $_POST['date'];
 
 
         // Insert
-        $sql = "INSERT INTO bookings (status, member_id, property_id, booking_start)
-        VALUES('requested', $member_id, $pid, '$startDate')";
-        echo $sql;
+            $sql = "INSERT INTO bookings (status, member_id, property_id, booking_start)
+            VALUES('requested', $member_id, $pid, '$startDate')";
 
         // prepare query for execution
-        $retval = $con->query($sql);
+            $retval = $con->query($sql);
 
-        if (!$retval){
-            echo "could not create property";
-        }
-        else {
-            echo "Property Created!";
-            
+
         }
 
-    }
-
-    ?>
+        ?>
 
         <div id="wrapper">
 
@@ -129,16 +121,10 @@
                         <a href="search.php">All Listings</a>
                     </li>
                     <li>
-                        <a href="#">Overview</a>
-                    </li>
-                    <li>
                         <a href="properties.php">My Properties</a>
                     </li>
                     <li>
                         <a href="bookings.php">My Bookings</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
                     </li>
                     <li>
                         <a href="settings.php">Account Setting</a>
@@ -221,7 +207,10 @@
                                     echo "<a href='comments.php'> <img src ='images/house.png' height='200' width='300'>  </a>" . "<br>";
                                     echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
                                     <div >
-                                        <button type="bookbutton" id='book_property'> Book Property</button> 
+                                        <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                        <?php
+                                        $_SESSION['property_id'] = $row['property_id'];
+                                        ?>
                                         <form  action="comments.php" method = 'get'>
                                             <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
                                             <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
@@ -241,6 +230,10 @@
                                 while($row = $result->fetch_assoc()){
                                     echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
                                     echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                    <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                    <?php
+                                    $_SESSION['property_id'] = $row['property_id'];
+                                    ?>
                                     <form  action="comments.php" method = 'get'>
                                         <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
                                         <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
@@ -251,15 +244,19 @@
                             }
                             elseif(isset($_POST['featLow']) && isset($_SESSION['member_id'])){
 
-                             include_once 'config/connection.php'; 
-                             $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
-                             ORDER BY COUNT(features)";
-                             $stmt = $con->prepare($newQuery);
-                             $stmt->execute();
-                             $result = $stmt->get_result();
-                             while($row = $result->fetch_assoc()){
+                               include_once 'config/connection.php'; 
+                               $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
+                               ORDER BY COUNT(features)";
+                               $stmt = $con->prepare($newQuery);
+                               $stmt->execute();
+                               $result = $stmt->get_result();
+                               while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
                                 echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
                                     <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
@@ -281,6 +278,10 @@
                             while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
                                 echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
                                 <form  action="comments.php" method = 'get'> 
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
                                     <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
@@ -302,6 +303,10 @@
                             while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
                                 echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                               $_SESSION['property_id'] = $row['property_id'];
+                                ?>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
                                     <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
@@ -323,6 +328,10 @@
                             while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
                                 echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
                                     <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
@@ -343,6 +352,10 @@
                             while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
                                 echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
                                     <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
@@ -363,133 +376,145 @@
                             while($row = $result->fetch_assoc()){
                                 echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
                                 echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                e                                    <form  action="comments.php" method = 'get'>
-                                <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
-                            </form>
-                            <br> <br> <br>
-                            <?php
-                        }
-
-                    }
-
-                    elseif(isset($_POST['apartment']) && isset($_SESSION['member_id'])){
-
-                        include_once 'config/connection.php'; 
-                        $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%apartment%' GROUP BY property_id";
-                        $stmt = $con->prepare($newQuery);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        while($row = $result->fetch_assoc()){
-                            echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                            echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                            <form  action="comments.php" method = 'get'>
-                                <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
-                            </form>
-                            <br> <br> <br>
-                            <?php
-                        }
-
-                    }
-
-                    elseif(isset($_POST['room']) && isset($_SESSION['member_id'])){
-
-                        include_once 'config/connection.php'; 
-                        $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%room%' GROUP BY property_id";
-                        $stmt = $con->prepare($newQuery);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        while($row = $result->fetch_assoc()){
-                            echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                            echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                            <form  action="comments.php" method = 'get'>
-                                <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
-                            </form>
-                            <br> <br> <br>
-                            <?php
-                        }
-
-                    }
-
-                    else {
-                        while($row = $result->fetch_assoc()){
-                            echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                            echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] .  "<br>"; ?>
-                            <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
-                            <?php
-                                $_SESSION['property_id'] = $property_id;
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
                                 ?>
-                            <form  action="comments.php" method = 'get'>
-                                <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
-                            </form>
-                            <br> <br> <br>
-                            <?php
+                                <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                </form>
+                                <br> <br> <br>
+                                <?php
+                            }
 
                         }
-                    }
+
+                        elseif(isset($_POST['apartment']) && isset($_SESSION['member_id'])){
+
+                            include_once 'config/connection.php'; 
+                            $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%apartment%' GROUP BY property_id";
+                            $stmt = $con->prepare($newQuery);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            while($row = $result->fetch_assoc()){
+                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
+                                <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                </form>
+                                <br> <br> <br>
+                                <?php
+                            }
+
+                        }
+
+                        elseif(isset($_POST['room']) && isset($_SESSION['member_id'])){
+
+                            include_once 'config/connection.php'; 
+                            $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%room%' GROUP BY property_id";
+                            $stmt = $con->prepare($newQuery);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            while($row = $result->fetch_assoc()){
+                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
+                                <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                </form>
+                                <br> <br> <br>
+                                <?php
+                            }
+
+                        }
+
+                        else {
+                            while($row = $result->fetch_assoc()){
+                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
+                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] .  "<br>"; ?>
+                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
+                                <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                </form>
+                                <br> <br> <br>
+                                <?php
+
+                            }
+                        }
 
 
-                    ?>
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- /#page-content-wrapper -->
+
     </div>
-    <!-- /#page-content-wrapper -->
 
-</div>
+    <div>
+        <center>
+            <div id = "propertyform">
+                <form method = "post" action = "<?php $_PHP_SELF ?>">
+                    <p>Add a New QBnB Booking</p>
+                    <br>
+                    <input type = "image" id = "close_property" src = "images/close.png">
+                    <input type = "hidden" id="pid" name="pid" value="<?= $row['property_id'] ?>">
+                    <input type = "text" size="9" id = "date" placeholder = "Enter Start Date (YYYY-MM-DD)" name = "date" required>
+                    <input type = "submit" id = "createbooking" value = "Create Booking" name = "createbooking" <a href="#"></a>>
+                </form>
+            </div>
+        </center>
+    </div>
+    <!-- /#wrapper -->
 
-<div>
-    <center>
-        <div id = "propertyform">
-            <form method = "post" action = "<?php $_PHP_SELF ?>">
-                <p>Add a New QBnB Booking</p>
-                <br>
-                <input type = "image" id = "close_property" src = "images/close.png">
-                <input type = "hidden" id="pid" name="pid" value="<?= $row['property_id'] ?>">
-                <input type = "text" size="9" id = "date" placeholder = "Enter Start Date (YYYY-MM-DD)" name = "date" required>
-                <input type = "submit" id = "createbooking" value = "Create Booking" name = "createbooking" <a href="#"></a>>
-            </form>
-        </div>
-    </center>
-</div>
-<!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
 
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
 
-<!-- Menu Toggle Script -->
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
-
-<?php
+    <?php
 
 
 //add a property
-if(isset($_POST['viewcomment'])){
+    if(isset($_POST['viewcomment'])){
 
     // include database connection
-    include_once 'config/connection.php'; 
-    $property_id = $_POST['propid'];
-    echo $property_id;
+        include_once 'config/connection.php'; 
+        $property_id = $_POST['propid'];
+        echo $property_id;
 
 
         // Insert
-    $_SESSION['property_id'] = $property_id;
+        $_SESSION['property_id'] = $property_id;
 
 
-}
+    }
 
-?>
+    ?>
 
 
 </body>
