@@ -141,7 +141,8 @@
 					<?php
 					foreach ($result as $row) { ?> 
 					 <li>
-					 <textarea name="zambia" maxlength"0" id="zambia" > <?= $row["booking_id"] ?></textarea>
+					 	<input type="hidden" name="zambia" id="zambia" value="<?= $row['booking_id'] ?>">
+					 <textarea name="" maxlength"0" id="zambia" > <?= $row["property_id"] ?></textarea>
 					 <center> <input type="submit" id="delete" name="delete" class="btn btn-primary" value="Delete"> </center> </li>
 					<?php }
 
