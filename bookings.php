@@ -126,7 +126,7 @@
 	<div class="wrapper">
 		<center>
 
-		<button class="btn btn-primary" type="button" id='delete_property smallMargin'> Delete a Booking</button> 
+		<button class="btn btn-primary" type="button" id='delete_property'> Delete a Booking</button> 
 
 		</center>
 	</div> 
