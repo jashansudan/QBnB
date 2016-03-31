@@ -109,12 +109,11 @@
 
 		$comment = $_POST['theComment'];
 		$rating = $_POST['rating'];
-		$proper_id = $_POST['properid'];
-		$membid = $_POST['membid'];
+		$proper_id = $_GET['propid'];
+		$membid = $_SESSION['member_id'];
         // Insert
         $sql = "INSERT INTO comments (member_id, property_id, rating, comment_text, reply)
 		VALUES('$membid', '$proper_id', '$rating', '$comment', null)";
-
 
         // prepare query for execution
 		$retval = $con->query($sql);
