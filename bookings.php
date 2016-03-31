@@ -122,7 +122,7 @@
 		</table>
 		
 	</div>
-	
+
 	<div class="wrapper">
 		<center>
 
@@ -158,10 +158,10 @@
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-    </div>
+    
 
 	
-</div>
+
 
 </body>
 

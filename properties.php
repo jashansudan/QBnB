@@ -95,7 +95,7 @@
 
         // Insert
 		$sql = "DELETE FROM Rental_properties WHERE property_id = '$propertyToDelete'";
-
+		echo "$propertyToDelete";
 
         // prepare query for execution
 		$retval = $con->query($sql);
@@ -191,7 +191,8 @@
 										<?php
 										foreach ($result as $row) { ?> 
 										 <li>
-										 <textarea rows="0" cols="0" name="zambia" maxlength"0" id="zambia"> <?= $row["address"] ?></textarea>
+										 	<input type="hidden" name="zambia" id="zambia" value="<?= $row['property_id'] ?>">
+										 <textarea rows="0" cols="0" name="" maxlength"0" id="zambia"> <?= $row["address"] ?></textarea>
 										 <input type="submit" id="delete" name="delete" class="btn btn-md btn-primary btn-block smallMargin" value="Delete"> </button> </li>
 										<?php }
 
@@ -211,26 +212,7 @@
     </div>
 
 
-	<div>
-		<center>
-			<div id = "deletepropertyform">
-			<form method = "post" action = "<?php $_PHP_SELF ?>">
-			<input type = "image" id = "close_property_del" src = "images/close.png">
-				<ul style="list-style-type:none">
-					<?php
-					foreach ($result as $row) { ?> 
-					 <li>
-					 <input type="hidden" id="zimbabwe" name="zimbabwe" value="<?= $row["property_id"] ?>" ></input>
-					 <textarea rows="0" cols="0" name="zambia" maxlength"0" id="zambia"> <?= $row["address"] ?></textarea>
-					 <input type="submit" id="delete" name="delete" class="btn btn-md btn-primary btn-block smallMargin" value="Delete"> </button> </li>
-					<?php }
-
-					 ?>
-				</ul>
-				</form>
-			</div>
-		</center>
-	</div>
+	
 
 
 </body>
