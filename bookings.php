@@ -23,7 +23,7 @@
 	include_once 'config/connection.php'; 
 
 			    // SELECT query
-	$query = "SELECT member_id, booking_id, Fname, status, booking_start FROM bookings NATURAL JOIN member WHERE member_id=?";
+	$query = "SELECT member_id, booking_id, Fname, status, booking_start, property_id FROM bookings NATURAL JOIN member WHERE member_id=?";
 
 
 			        // prepare query for execution
@@ -75,7 +75,7 @@
 	}
 
 	?>
-
+	<div id = "wrapper">
 
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
@@ -104,16 +104,30 @@
             </li>
 		</ul>
 	</div>
-	<div class="property-list">
-		<ul style="list-style-type:none">
+
+
+	<div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Take a look at your bookings! </h1>
+
+            <table class='table'>
+            	<thead><tr> <th>Image </th> <th> Property ID </th> <th> Status </th> <th>Date </th></tr> </thead>
 			<?php
 			foreach ($result as $row) { ?> 
-			<li > <image src ="images/house.jpg"/> <p>  STATUS: <?= $row["status"] ?> &emsp; Start DATE: <?= $row["booking_start"] ?>  </p> </li>
+			<tbody> <tr> 
+			<td> <image src ="images/house.jpg"/> </td> <td><?= $row["property_id"] ?> </td> <td> <?= $row["status"] ?> </td> <td> <?= $row["booking_start"] ?> </td></tr></tbody>
 			<?php } ?>
-		</ul>
+		</table>
+		
 	</div>
 	<div class="wrapper">
-		<button class="btn btn-md btn-primary btn-block" type="button" id='delete_property'> Delete a Booking</button> 
+		<center>
+
+		<button class="btn btn-primary" type="button" id='delete_property smallMargin'> Delete a Booking</button> 
+
+		</center>
 	</div> 
 
 
@@ -127,7 +141,7 @@
 					foreach ($result as $row) { ?> 
 					 <li>
 					 <textarea name="zambia" maxlength"0" id="zambia" > <?= $row["booking_id"] ?></textarea>
-					 <input type="submit" id="delete" name="delete" class="btn btn-md btn-primary btn-block smallMargin" value="Delete"> </button> </li>
+					 <center> <input type="submit" id="delete" name="delete" class="btn btn-primary" value="Delete"> </center> </li>
 					<?php }
 
 					$propertyToDelete = $row["booking_id"];
@@ -137,6 +151,16 @@
 			</div>
 		</center>
 	</div>
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+
+	
+</div>
 
 </body>
 

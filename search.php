@@ -175,8 +175,8 @@
                                             <span class="caret"></span></button>
                                             <ul class="dropdown-menu">
 
+                                              <li><input type='submit' class='form-control btn btn-link' name = 'priceLow' value='Lowest - Highest'></li>
                                               <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Highest - Lowest'></li>
-                                              <li><input type='submit' class='form-control btn btn-link' name = 'priceHigh' value='Lowest - Highest'></li>
 
                                           </ul>
                                       </div>
@@ -206,23 +206,32 @@
                                 $stmt = $con->prepare($newQuery);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
-                                while($row = $result->fetch_assoc()){
-                                    echo "<a href='comments.php'> <img src ='images/house.png' height='200' width='300'>  </a>" . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                    <div >
-                                        <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
-                                        <?php
-                                        $_SESSION['property_id'] = $row['property_id'];
-                                        ?>
-                                        <form  action="comments.php" method = 'get'>
-                                            <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                            <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
-                                        </form>
-                                    </div>
-                                    <br> <br> <br>
-                                    <?php
-                                }
+
+                                echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr> </thead>";
+                            while($row = $result->fetch_assoc()){
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
+                                <td>
+                                <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                </form>
+                                </td> </tr>  </tbody>
+                                    
+                                <?php
+
                             }
+                            echo "</table>";
+                        }
                             elseif(isset($_POST['disHigh']) && isset($_SESSION['member_id'])){
                                 include_once 'config/connection.php'; 
                                 $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id GROUP BY property_id
@@ -230,21 +239,31 @@
                                 $stmt = $con->prepare($newQuery);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
-                                while($row = $result->fetch_assoc()){
-                                    echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                    echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                    <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
-                                    <?php
-                                    $_SESSION['property_id'] = $row['property_id'];
-                                    ?>
-                                    <form  action="comments.php" method = 'get'>
-                                        <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                        <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
-                                    </form>
-                                    <br> <br> <br>
-                                    <?php
-                                }
+                                echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
+                            while($row = $result->fetch_assoc()){
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
+                                <?php
+                                $_SESSION['property_id'] = $row['property_id'];
+                                ?>
+                                <td>
+                                <form  action="comments.php" method = 'get'>
+                                    <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                </form>
+                                </td> </tr>  </tbody>
+                                    
+                                <?php
+
                             }
+                            echo "</table>";
+                        }
                             elseif(isset($_POST['featLow']) && isset($_SESSION['member_id'])){
 
                                include_once 'config/connection.php'; 
@@ -253,21 +272,30 @@
                                $stmt = $con->prepare($newQuery);
                                $stmt->execute();
                                $result = $stmt->get_result();
-                               while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                               echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
+                            while($row = $result->fetch_assoc()){
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }   
 
+                            }
+                            echo "</table>";
                         }
 
                         elseif(isset($_POST['featHigh']) && isset($_SESSION['member_id'])){
@@ -278,21 +306,30 @@
                             $stmt = $con->prepare($newQuery);
                             $stmt->execute();
                             $result = $stmt->get_result();
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
                             while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
-                                <form  action="comments.php" method = 'get'> 
+                                <td>
+                                <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }   
 
+                            }
+                            echo "</table>";
                         }
 
                         elseif(isset($_POST['priceLow']) && isset($_SESSION['member_id'])){
@@ -303,21 +340,30 @@
                             $stmt = $con->prepare($newQuery);
                             $stmt->execute();
                             $result = $stmt->get_result();
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
                             while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
-                               $_SESSION['property_id'] = $row['property_id'];
+                                $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }
 
+                            }
+                            echo "</table>";
                         }
 
                         elseif(isset($_POST['priceHigh']) && isset($_SESSION['member_id'])){
@@ -328,21 +374,30 @@
                             $stmt = $con->prepare($newQuery);
                             $stmt->execute();
                             $result = $stmt->get_result();
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
                             while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }
 
+                            }
+                            echo "</table>";
                         }
 
                         elseif(isset($_POST['condo']) && isset($_SESSION['member_id'])){
@@ -352,21 +407,30 @@
                             $stmt = $con->prepare($newQuery);
                             $stmt->execute();
                             $result = $stmt->get_result();
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
                             while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }
 
+                            }
+                            echo "</table>";
                         }
 
                         elseif(isset($_POST['house']) && isset($_SESSION['member_id'])){
@@ -376,21 +440,30 @@
                             $stmt = $con->prepare($newQuery);
                             $stmt->execute();
                             $result = $stmt->get_result();
-                            while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
+                           while($row = $result->fetch_assoc()){
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }
 
+                            }
+                            echo "</table>";
                         }
 
                         elseif(isset($_POST['apartment']) && isset($_SESSION['member_id'])){
@@ -400,63 +473,89 @@
                             $stmt = $con->prepare($newQuery);
                             $stmt->execute();
                             $result = $stmt->get_result();
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
                             while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }
 
+                            }
+                            echo "</table>";
                         }
 
                         elseif(isset($_POST['room']) && isset($_SESSION['member_id'])){
 
                             include_once 'config/connection.php'; 
-                            $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE '%room%' GROUP BY property_id";
+                            $newQuery = "SELECT Rental_Properties.*, GROUP_CONCAT(Features.features SEPARATOR ', ') as features FROM Rental_Properties NATURAL JOIN Features WHERE member_id <> $member_id and type LIKE 'room%' GROUP BY property_id";
                             $stmt = $con->prepare($newQuery);
                             $stmt->execute();
                             $result = $stmt->get_result();
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr>";
                             while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] . "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            
+                                echo "<tbody><tr> <td> <img src ='images/house.png' height='200' width='300'> " . "</td>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                
+                                <td>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </td>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                                </td> </tr>  </tbody>
+                                    
                                 <?php
-                            }
 
+                            }
+                            echo "</table>";
                         }
 
                         else {
+                            echo "<table class = 'table'>";
+                                echo "<thead>";
+                                echo " <tr> <th> Picture </th> <th> Property Address </th> <th> Type </th> <th>Price/week </th> <th>District</th> <th> Features </th> <th> View Comments </th> <th> Book Now </th></tr> </thead>";
                             while($row = $result->fetch_assoc()){
-                                echo "<img src ='images/house.png' height='200' width='300'> " . "<br>";
-                                echo "Address: " . $row['address'] . ", Type: " . $row['type'] . ", Price/week: " . $row['rate'] . " District: " . $row['district'] . ", Features: " . $row['features'] .  "<br>"; ?>
-                                <button  type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> 
+                            
+                                echo "<tbody><th> <img src ='images/house.png' height='200' width='300'> " . "</th>";
+                                echo "<td>" . $row['address'] . "</td> <td> " . $row['type'] . "</td> <td> " . $row['rate'] . " </td> <td> " . $row['district'] . "</td> <td> " . $row['features'] .  "</td>"; ?>
+                                <th>
+                                <button class='btn btn-primary temp' type="bookbutton" id='book_property' onclick="showBooking()" > Book Property</button> </th>
                                 <?php
                                 $_SESSION['property_id'] = $row['property_id'];
                                 ?>
+                                <td>
                                 <form  action="comments.php" method = 'get'>
                                     <input type="hidden" name="propid" id="propid" value="<?= $row['property_id'] ?>">
-                                    <input type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
+                                    <input class='btn btn-primary temp' type = 'submit' width='600px' height='800px' id = 'viewcomment' value = 'View Comments' name ='viewcomment'>
                                 </form>
-                                <br> <br> <br>
+                            </td> </td></tbody>
+                                    
                                 <?php
 
                             }
+                            echo "</table>";
                         }
 
 

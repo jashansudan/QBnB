@@ -113,7 +113,7 @@
 
 	?>
 
-
+	<div id = "wrapper">
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
 			<li class="sidebar-brand">
@@ -141,20 +141,32 @@
             </li>
 		</ul>
 	</div>
-	<div class="property-list">
-		<ul style="list-style-type:none">
-			<?php
-			foreach ($result as $row) { ?> 
-			<li > <image src ="images/house.jpg"/> <p> ADDRESS:  <?= $row["address"] ?> &emsp; DISTRICT: <?= $row["district"] ?> &emsp; TYPE: <?= $row["type"] ?>  </p> </li>
-			<?php } ?>
-		</ul>
-	</div>
-	<div class="wrapper">
-		<button class="btn btn-md btn-primary btn-block" type="button" id='add_property'> Add New Property</button> 
-		<button class="btn btn-md btn-primary btn-block" type="button" id='delete_property'> Delete a Property</button> 
-	</div> 
-	<div>
-		<center>
+
+	<div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Take a look at your Properties! </h1>
+                        <div class="property-list">
+							<table class='table'>
+								<thead> <tr> <th> Image </th> <th> Address </th> <th> District </th> <th> Type </th> </tr> </thead>
+							<?php
+							foreach ($result as $row) { ?> 
+							<tbody> <tr>
+
+							 <td><image src ="images/house.jpg"/> </td>   <td><?= $row["address"] ?> </td> <td> <?= $row["district"] ?> </td> <td> <?= $row["type"] ?></td>
+							</tr> </tbody>
+							<?php 
+
+							} ?>
+
+							</table>
+						</div>
+				<div class="wrapper">
+					<button class="btn btn-md btn-primary btn-block" type="button" id='add_property'> Add New Property</button> 
+					<button class="btn btn-md btn-primary btn-block" type="button" id='delete_property'> Delete a Property</button> 
+				</div> 
+			<div>
 			<div id = "propertyform">
 				<form method = "post" action = "<?php $_PHP_SELF ?>">
 					<p>Add a New QBnB Property</p>
@@ -167,29 +179,36 @@
 					<input type = "submit" id = "createProperty" value = "Create Property" name = "createProperty" <a href="#"></a>>
 				</form>
 			</div>
-		</center>
-	</div>
-
-
-	<div>
-		<center>
-			<div id = "deletepropertyform">
-			<form method = "post" action = "<?php $_PHP_SELF ?>">
-			<input type = "image" id = "close_property_del" src = "images/close.png">
-				<ul style="list-style-type:none">
-					<?php
-					foreach ($result as $row) { ?> 
-					 <li>
-					 <textarea rows="0" cols="0" name="zambia" maxlength"0" id="zambia"> <?= $row["address"] ?></textarea>
-					 <input type="submit" id="delete" name="delete" class="btn btn-md btn-primary btn-block smallMargin" value="Delete"> </button> </li>
-					<?php }
-
-					 ?>
-				</ul>
-				</form>
 			</div>
-		</center>
-	</div>
+
+
+						<div>
+								<div id = "deletepropertyform">
+								<form method = "post" action = "<?php $_PHP_SELF ?>">
+								<input type = "image" id = "close_property_del" src = "images/close.png">
+									<ul style="list-style-type:none">
+										<?php
+										foreach ($result as $row) { ?> 
+										 <li>
+										 <textarea rows="0" cols="0" name="zambia" maxlength"0" id="zambia"> <?= $row["address"] ?></textarea>
+										 <input type="submit" id="delete" name="delete" class="btn btn-md btn-primary btn-block smallMargin" value="Delete"> </button> </li>
+										<?php }
+
+										 ?>
+									</ul>
+									</form>
+								</div>
+						</div>
+                        
+                        <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /#page-content-wrapper -->
+    </div>
+
 
 </body>
 

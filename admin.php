@@ -132,21 +132,28 @@ if(isset($_SESSION['member_id'])){
                                 $stmt = $con->prepare($newQuery);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
-                                
+
+                                echo "<table class = 'table'>";
+                                    echo "<thead>";
+                                    echo " <tr> <th> Delete </th> <th> Member ID </th> <th> Name </th></tr> </thead>";
                                 while($row = $result->fetch_assoc()){
                                     $del_id = $row['member_id']; ?>
+                                    <tbody>
+                                    <tr> <td>
                                     <form action="<?php $_PHP_SELF ?>" method= 'post'>
                                         <input type = 'hidden' name='accDet' id ='accDet' value='<?= $row["member_id"]?>'>
                                         <input class = 'btn btn-primary temp' type='submit' width='600px' id='$row["member_id"]' value = 'Delete Account' name = 'del_id'>
                                     </form>
+                                </td>
 
                                     
                                     <?php 
-                                
-                                    echo "Member ID: " . $row['member_id'] . ", Name: " . $row['Fname'] . " " . $row['Lname'] . "<br>";
+                                    
+                                    echo "<td>" . $row['member_id'] . "</td> <td> " . $row['Fname'] . " " . $row['Lname'] . "</td> </tr> </tbody>";
 
 
                                 }
+                                echo "</table>";
                         
 
                             }
@@ -178,16 +185,23 @@ if(isset($_SESSION['member_id'])){
                                 $stmt = $con->prepare($query);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
+
+                                echo "<table class = 'table'>";
+                                    echo "<thead> <tr> <th> Delete </th> <th> Property Address </th> <th> Property ID </th></tr> </thead>";
                                 while($row = $result->fetch_assoc()){
                                     $del_acom = $row['property_id']; ?>
+                                    <tbody>
+                                    <td>
                                     <form action="<?php $_PHP_SELF ?>" method= 'post'>
                                         <input type = 'hidden' name='propDet' id ='propDet' value='<?= $row["property_id"]?>'>
                                         <input class = 'btn btn-primary temp' type='submit' width='600px' id='$row["property_id"]' value = 'Delete Accomodation' name = 'delAcom'>
                                     </form>
+                                </th>
                                     <?php
-                                    echo "Property Address: " . $row['address'] . ", District: " . $row['district'];
+                                    echo "<td>" . $row['address'] . "</td> <td> " . $row['property_id'] . " </td> </tr> </tbody> ";
 
                                 }
+                                echo "</table>";
 
                             }
                             ?>
@@ -217,14 +231,18 @@ if(isset($_SESSION['member_id'])){
                                     $stmt = $con->prepare($query);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
+                                    echo "<table class = 'table'>";
+                                    echo "<thead>";
+                                    echo " <tr> <th> Address</th> <th> Average Rating </th> <th> Comment </th> </tr> </thead>";
                                     while($row = $result->fetch_assoc()){
-                                        echo"Address: " . $row['address'] . ", Average Rating: " . $row['rate'];
+                                        echo"<tbody> <tr> <td> " . $row['address'] . "</td> <td> " . $row['rate'];
                                         if ($row['comment'] != null){
-                                            echo ", Comment: ". $row['comment'];
+                                            echo "</td> <td>". $row['comment'];
                                         }
-                                        echo "<br>";
+                                        echo " </td> </td> </tbody>";
 
                                     }
+                                    echo "</table>";
 
                                 }
 
@@ -241,13 +259,17 @@ if(isset($_SESSION['member_id'])){
                                     $stmt = $con->prepare($query);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
+                                    echo "<table class = 'table'>";
+                                    echo "<thead>";
+                                    echo " <tr> <th> Supplier </th> <th> Average Rating </th> <th> Comment </th> </tr> </thead>";
                                     while($row = $result->fetch_assoc()){
-                                        echo"Supplier: " . $row['Fname'] . " ", $row['Lname'] . ", Average Rating: " . $row['rate'];
+                                        echo" <tbody> <tr> <td>" . $row['Fname'] . " " .  $row['Lname'] . "</td> <td> " . $row['rate'];
                                         if ($row['comment'] != null){
-                                            echo ", Comment: ". $row['comment'];
+                                            echo "</td> <td> ". $row['comment'];
                                         }
-                                        echo "<br>";
+                                        echo " </td></tr> </tbody>";
                                     }
+                                    echo "</table>";
 
                                 }
 
@@ -264,10 +286,14 @@ if(isset($_SESSION['member_id'])){
                                     $stmt = $con->prepare($query);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
+
+                                    echo "<table class = 'table'>";
+                                    echo "<thead>";
+                                    echo " <tr> <th> Consumer </th> <th> Rental Properties </th> <th> Booking Dates </th> <th> Status</th> </tr> <thead>";
                                     while($row = $result->fetch_assoc()){
-                                        echo"Consumer: " . $row['Fname'] . " " . $row['Lname'] . ", Rental Properties: " . $row['addresses'] . ", Booking Starts: " . $row['bookings_start'] . ", Status: " . $row['statuses'];
-                                        echo "<br>";
+                                        echo"<tbody> <tr>  <td>" . $row['Fname'] . "</td> <td>" .  $row['Lname'] . " </td> <td> " .$row['addresses'] . "</td> <td> " . $row['bookings_start'] . " </td> <td> " . $row['statuses'] . "</td></tr> ";
                                     }
+                                    echo " </tbody></table>";
 
                                 }
 

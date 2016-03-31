@@ -3,7 +3,6 @@
 {
    width:400px;
    height:400px;
-   right:225px;
    margin-top: -500px;
    background-color:#585858;
    border-radius:3px;
@@ -20,7 +19,6 @@
 {
    width:400px;
    height:400px;
-   right:225px;
    margin-top: -500px;
    background-color:#585858;
    border-radius:3px;
@@ -102,6 +100,7 @@ body {
         background-size: cover;
 }
 
+
 .wrapper {  
   max-width: 580px;
   margin-left: auto;
@@ -111,8 +110,7 @@ body {
 .property-list {
   max-width: 380px;
   background-color: #fff;
-  margin-left:auto;
-  margin-right:auto;
+
 }
 
 .property-list-item {

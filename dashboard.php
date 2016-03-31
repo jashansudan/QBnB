@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="dashboard.css">
 
     <title>QBnB Dashboard</title>
 
@@ -103,10 +104,32 @@ if(isset($_SESSION['member_id'])){
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Welcome to QBnB</h1>
-                        <br> <br> <br>
-                        <H3>  WE <strong> DON'T </strong> KNOW WHY YOU ARE <strong> HERE </strong> <h3>
-                        <H6> Why are you using QBnB instead of AirBnB?</H6>
-                        <H6> Anyways, take a look around, this site is pretty 🔥 !!! </H6>
+                        <h4> Where Queen's Alumni can <strong> share </strong> memories. </h4>
+                        <br> <br> 
+                        
+                        <H5> QBnB is a website where Queen's Alumni can book & host other Queen's
+                            Alumni at their house(s).</H5>
+                        <H5> Take a look around to find your next stay! </H5>
+                        
+                        <br> <br>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div class="hovereffect">
+                            <img class="img-responsive" src="images/1.jpg" alt="">
+                            <div class="overlay">
+                               <h2>Look at available bookings!</h2>
+                               <a class="info" href="search.php">Click Here!</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                        <div class="hovereffect">
+                            <img class="img-responsive" src="images/2.png" alt="">
+                            <div class="overlay">
+                               <h2>List your Property!</h2>
+                               <a class="info" href="properties.php">Click</a>
+                            </div>
+                        </div>
+                    </div>
                         <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                     </div>
                 </div>
