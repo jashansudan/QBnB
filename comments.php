@@ -123,7 +123,7 @@
 
 	?>
 
-
+	<div id ="wrapper">
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
 			<li class="sidebar-brand">
@@ -151,13 +151,14 @@
             </li>
 		</ul>
 	</div>
-	<div  class="property-list"  id="page-content-wrapper">
+	<div id="page-content-wrapper">
+	<div  class="property-list" >
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <ul style="list-style-type:none">
-			<h1>COMMENTS</h1>
-			<?php
+					<h1>COMMENTS</h1>
+						<?php
 
 			foreach ($result as $row) { ?> 
 			<li  ><p> USER: <?= $row["Fname"]?> <br> RATING: <?= $row["rating"] ?> <br> COMMENT: <?= $row["comment_text"]?> <br></p>
@@ -186,6 +187,22 @@
                 </div>
             </div>
         </div>
+        <div class="property-list">
+		<center>
+	<h2>Add a Comment</h2><br>
+</center>
+	<center>
+		<form method="post"> 
+		<input type="hidden" value="<?= $row['property_id'] ?>" id="properid" name="properid"></input>
+		<input type="hidden" value="<?= $row['member_id'] ?>" id="membid" name="membid"></input>
+					 <input type="text" value="Comment" id="theComment" name="theComment"></input><br>
+					 <input type="text" value="Rating (1-5)" id="rating" name="rating"></input><br>
+					 <input class = 'btn btn-primary' type="submit" id="add_comment" name="add_comment" value="Submit"></input><br><br>
+
+					 </form>
+		</center>
+	</div>
+    </div>
         <!-- /#page-content-wrapper -->
     </div>
     <!--
@@ -218,21 +235,7 @@
 		</ul>
 	</div>
 -->
-	<div class="property-list">
-		<center>
-	<h2>Add a Comment</h2><br>
-</center>
-	<center>
-		<form method="post"> 
-		<input type="hidden" value="<?= $row['property_id'] ?>" id="properid" name="properid"></input>
-		<input type="hidden" value="<?= $row['member_id'] ?>" id="membid" name="membid"></input>
-					 <input type="text" value="Comment" id="theComment" name="theComment"></input><br>
-					 <input type="text" value="Rating (1-5)" id="rating" name="rating"></input><br>
-					 <input class = 'btn btn-primary' type="submit" id="add_comment" name="add_comment" value="Submit"></input><br><br>
 
-					 </form>
-		</center
-	</div>
 
 
 </body>

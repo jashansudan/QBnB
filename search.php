@@ -560,15 +560,7 @@
 
 
                         ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
-    </div>
-
-    <div>
+                        <div>
         <center>
             <div id = "propertyform">
                 <form method = "post" action = "<?php $_PHP_SELF ?>">
@@ -577,11 +569,20 @@
                     <input type = "image" id = "close_property" src = "images/close.png">
                     <input type = "hidden" id="pid" name="pid" value="<?= $row['property_id'] ?>">
                     <input type = "text" size="9" id = "date" placeholder = "Enter Start Date (YYYY-MM-DD)" name = "date" required>
-                    <input type = "submit" id = "createbooking" value = "Create Booking" name = "createbooking" <a href="#"></a>>
+                    <input type = "submit" id = "createbooking" value = "Create Booking" name = "createbooking" <a href="#"></a>
                 </form>
             </div>
         </center>
     </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->

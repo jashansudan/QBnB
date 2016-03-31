@@ -90,16 +90,16 @@
     // include database connection
 		include_once 'config/connection.php'; 
 
-		$propertyToDelete = $_POST['zimbabwe'];
+		$propertyToDelete = $_POST['zambia'];
 
 
         // Insert
-		$sql = "DELETE FROM rental_properties WHERE property_id = '$propertyToDelete'";
-		echo $propertyToDelete;
+		$sql = "DELETE FROM Rental_properties WHERE property_id = '$propertyToDelete'";
 
 
         // prepare query for execution
 		$retval = $con->query($sql);
+
 
 		if (!$retval){
 			echo "oops";
@@ -176,13 +176,13 @@
 					<input type = "text" id = "district" placeholder = "District" name = "district" required>
 					<input type = "text" id = "type" placeholder = "Property Type" name = "type" required>
 					<input type = "text" size="9" id = "rate" placeholder = "Rent" name = "rate" required>
-					<input type = "submit" id = "createProperty" value = "Create Property" name = "createProperty" <a href="#"></a>>
+					<input type = "submit" id = "createProperty" value = "Create Property" name = "createProperty" <a href="#"></a>
 				</form>
 			</div>
 			</div>
 
 
-<<<<<<< HEAD
+
 						<div>
 								<div id = "deletepropertyform">
 								<form method = "post" action = "<?php $_PHP_SELF ?>">
@@ -210,7 +210,7 @@
         <!-- /#page-content-wrapper -->
     </div>
 
-=======
+
 	<div>
 		<center>
 			<div id = "deletepropertyform">
@@ -231,7 +231,7 @@
 			</div>
 		</center>
 	</div>
->>>>>>> 0adde10f26f31a5f31645d9314168b5db125b895
+
 
 </body>
 
