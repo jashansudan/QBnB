@@ -1,3 +1,3 @@
 # QBnB
 
-Jerry Smells lol
+AirBnB application for Queen's Alumni
